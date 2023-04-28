@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 
-const PostPreview = ({ title, slug, post }) => {
+const PostPreview = ({ title, slug, post, id }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/hi");
+    navigate(`/hi/${id}`);
   };
 
   return (

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Layout from "./Layout";
 import Container from "./Container";
@@ -6,18 +7,12 @@ import PostHeader from "./PostHeader";
 import PostBody from "./PostBody";
 import classNames from "classnames";
 
-const test = [
-  {
-    picture:
-      "https://user-images.githubusercontent.com/59520911/205429514-5171a3f9-e0cd-47e9-985a-5a190060d619.svg",
-    title: "testtt",
-    slug: "testet",
-    post: "asfsasdfsdfsdffdsafddf",
-  },
-];
-
 export default function Post() {
-  const [posts, setPosts] = useState(test[0]);
+  const params = useParams();
+  const { id } = params;
+  const [posts, setPosts] = useState();
+
+  console.log({ id });
 
   const schemaName = "posts";
   const token =
@@ -29,7 +24,7 @@ export default function Post() {
   useEffect(() => {
     (async () => {
       const { data } = await axios(
-        `http://localhost:8000/api/storage/${schemaName}/contents`,
+        `http://localhost:8000/api/storage/${schemaName}/contents/${id}`,
         {
           method: "GET",
           headers: {
@@ -38,7 +33,7 @@ export default function Post() {
         }
       );
 
-      console.log(data);
+      console.log({ data });
 
       if (!data) return;
 
@@ -51,7 +46,6 @@ export default function Post() {
       {posts && (
         <Container>
           <article className="mb-32">
-            {/* <PostHeader title={posts.title} coverImage={posts.picture} /> */}
             <>
               <h2 className="text-xl py-5">{posts.title}</h2>
               <div className="mb-8 md:mb-16 sm:mx-0">
@@ -74,4 +68,6 @@ export default function Post() {
       )}
     </Layout>
   );
+
+  // return <Layout>asdfsdff</Layout>;
 }

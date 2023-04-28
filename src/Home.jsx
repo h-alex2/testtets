@@ -92,6 +92,7 @@ export default function Home() {
                   key={post._id}
                   slug={post._id}
                   post={post.post}
+                  id={post._id}
                 />
               ))}
             </div>
